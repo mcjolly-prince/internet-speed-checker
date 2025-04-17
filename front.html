@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internet Speed Checker</title>
+    <link rel="stylesheet" type="text/css" href="frnt.css">
+</head>
+<body>
+    <div class="card">
+        <h1>Internet Speed Results</h1>
+        {% if error %}
+            <p><strong>Error:</strong> {{ error }}</p>
+        {% else %}
+            <p><strong>Download Speed:</strong> {{ download }} Mbps</p>
+            <p><strong>Ping:</strong> {{ ping }} ms</p>
+        {% endif %}
+    </div>
+
+    <script>
+        fetch("/test")
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("error").textContent = "Error: " + data.error;
+                } else {
+                    document.getElementById("download").textContent = data.download;
+                    document.getElementById("ping").textContent = data.ping;
+                }
+            });
+    </script>
+</body>
+</html>

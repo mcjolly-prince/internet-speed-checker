@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internet Speed Checker</title>
-    <link rel="stylesheet" type="text/css" href="frnt.css">
+    <link rel="stylesheet" href="frnt.css">
 </head>
 <body>
-    <div class="card">
-        <h1>Internet Speed Results</h1>
-        {% if error %}
-            <p><strong>Error:</strong> {{ error }}</p>
-        {% else %}
-            <p><strong>Download Speed:</strong> {{ download }} Mbps</p>
-            <p><strong>Ping:</strong> {{ ping }} ms</p>
-        {% endif %}
+    <div class="container">
+        <h1>SPEED</h1>
+        <div class="speed-box">
+            <span>MBPS</span>
+            <div class="value-box" id="download">Testing...</div>
+        </div>
+        <div class="speed-box">
+            <span>PING</span>
+            <div class="value-box" id="ping">Testing...</div>
+        </div>
     </div>
 
     <script>
@@ -20,10 +24,11 @@
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
-                    document.getElementById("error").textContent = "Error: " + data.error;
+                    document.getElementById("download").textContent = "Error";
+                    document.getElementById("ping").textContent = "Error";
                 } else {
-                    document.getElementById("download").textContent = data.download;
-                    document.getElementById("ping").textContent = data.ping;
+                    document.getElementById("download").textContent = data.download + " Mbps";
+                    document.getElementById("ping").textContent = data.ping + " ms";
                 }
             });
     </script>
